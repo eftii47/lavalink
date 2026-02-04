@@ -1,5 +1,3 @@
-package com.lavalink.bot;
-
 import dev.arbjerg.lavalink.client.*;
 import dev.arbjerg.lavalink.client.player.*;
 import net.dv8tion.jda.api.EmbedBuilder;

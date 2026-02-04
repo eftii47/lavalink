@@ -1,5 +1,3 @@
-package com.lavalink.bot;
-
 import org.yaml.snakeyaml.Yaml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

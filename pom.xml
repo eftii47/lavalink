@@ -49,6 +49,7 @@
     </dependencies>
 
     <build>
+        <sourceDirectory>src</sourceDirectory>
         <plugins>
             <!-- Maven Compiler Plugin -->
             <plugin>
@@ -75,7 +76,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.lavalink.bot.MusicBot</mainClass>
+                                    <mainClass>MusicBot</mainClass>
                                     <manifestEntries>
                                         <Multi-Release>true</Multi-Release>
                                     </manifestEntries>
@@ -108,7 +109,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.lavalink.bot.MusicBot</mainClass>
+                            <mainClass>MusicBot</mainClass>
                             <addClasspath>true</addClasspath>
                         </manifest>
                     </archive>
