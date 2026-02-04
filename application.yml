@@ -1,0 +1,150 @@
+server:
+  port: 2333
+  address: 0.0.0.0
+  
+lavalink:
+  plugins:
+    # All plugins from the plugins/ directory will be loaded automatically
+  
+  server:
+    password: "youshallnotpass"
+    sources:
+      youtube: true
+      bandcamp: true
+      soundcloud: true
+      twitch: true
+      vimeo: true
+      http: true
+      local: false
+    
+    filters:
+      volume: true
+      equalizer: true
+      karaoke: true
+      timescale: true
+      tremolo: true
+      vibrato: true
+      distortion: true
+      rotation: true
+      channelMix: true
+      lowPass: true
+    
+    bufferDurationMs: 400
+    frameBufferDurationMs: 5000
+    opusEncodingQuality: 10
+    resamplingQuality: LOW
+    trackStuckThresholdMs: 10000
+    useSeekGhosting: true
+    youtubePlaylistLoadLimit: 6
+    playerUpdateInterval: 5
+    youtubeSearchEnabled: true
+    soundcloudSearchEnabled: true
+    gc-warnings: true
+    
+    # YouTube OAuth2 Configuration (Recommended)
+    # Using OAuth2 with device code flow helps avoid rate limits and IP bans
+    # This is more secure than email/password and doesn't require storing credentials
+    # Leave empty to use YouTube without authentication
+    youtubeConfig:
+      # OAuth2 will prompt you with a device code on first run
+      # Visit the URL shown in console and enter the code
+      # The refresh token will be saved automatically
+      oauth2:
+        enabled: false  # Set to true to enable OAuth2 authentication
+    
+    # IP Rotation for Rate Limiting (Optional)
+    # Helps distribute requests across multiple IPs to avoid YouTube blocks
+    #ratelimit:
+    #  ipBlocks: ["1.0.0.0/8"]  # List of IP blocks
+    #  excludedIps: []  # IPs to exclude from usage
+    #  strategy: "RotateOnBan"  # Options: RotateOnBan, LoadBalance, NanoSwitch, RotatingNanoSwitch
+    #  searchTriggersFail: true  # Whether a search 429 should mark IP as failing
+    #  retryLimit: -1  # -1 = use default, 0 = infinity, >0 = retry count
+    
+    # HTTP Proxy Configuration (Optional)
+    # Useful for routing all traffic through a proxy
+    #httpConfig:
+    #  proxyHost: "localhost"  # Proxy hostname (IP or domain)
+    #  proxyPort: 3128  # Proxy port (e.g., 3128 for Squid)
+    #  proxyUser: ""  # Optional: username for proxy authentication
+    #  proxyPassword: ""  # Optional: password for proxy authentication
+
+plugins:
+  # LavaSrc plugin configuration (Spotify, Apple Music, Deezer, etc.)
+  lavasrc:
+    providers:
+      - "ytsearch:\"%ISRC%\""
+      - "ytsearch:%QUERY%"
+    sources:
+      spotify: true
+      applemusic: true
+      deezer: true
+      yandexmusic: false
+      flowerytts: false
+      youtube: true
+    spotify:
+      clientId: "your_spotify_client_id"
+      clientSecret: "your_spotify_client_secret"
+      countryCode: "US"
+      playlistLoadLimit: 6
+      albumLoadLimit: 6
+    applemusic:
+      countryCode: "US"
+      mediaAPIToken: "your_apple_music_api_token"
+      playlistLoadLimit: 6
+      albumLoadLimit: 6
+    deezer:
+      masterDecryptionKey: "your_deezer_master_key"
+  
+  # LavaSearch plugin configuration
+  lavasearch:
+    sources:
+      spotify: true
+      applemusic: true
+      deezer: true
+      yandexmusic: false
+      youtube: true
+      soundcloud: true
+  
+  # SponsorBlock plugin configuration
+  sponsorblock:
+    enabled: true
+    providers:
+      youtube: true
+    categories:
+      - sponsor
+      - selfpromo
+  
+  # LavaLyrics plugin configuration
+  lavalyrics:
+    sources:
+      spotify: true
+      deezer: true
+      youtube: false
+      yandexMusic: false
+  
+  # TTS plugin configuration
+  tts:
+    sources:
+      - "google"
+      - "polly"
+
+metrics:
+  prometheus:
+    enabled: false
+    endpoint: /metrics
+
+sentry:
+  dsn: ""
+  environment: ""
+
+logging:
+  file:
+    path: ./logs/
+  level:
+    root: INFO
+    lavalink: INFO
+  logback:
+    rollingpolicy:
+      max-history: 30
+      max-file-size: 1GB

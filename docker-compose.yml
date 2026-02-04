@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  lavalink:
+    image: openjdk:17-slim
+    container_name: lavalink-v4
+    restart: unless-stopped
+    working_dir: /opt/lavalink
+    command: java -jar Lavalink.jar
+    volumes:
+      - ./Lavalink.jar:/opt/lavalink/Lavalink.jar:ro
+      - ./application.yml:/opt/lavalink/application.yml:ro
+      - ./plugins:/opt/lavalink/plugins:ro
+      - ./logs:/opt/lavalink/logs
+    ports:
+      - "2333:2333"
+    networks:
+      - lavalink-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:2333/version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: discord-music-bot
+    restart: unless-stopped
+    depends_on:
+      - lavalink
+    env_file:
+      - .env
+    networks:
+      - lavalink-network
+
+networks:
+  lavalink-network:
+    driver: bridge
